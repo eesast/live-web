@@ -1,0 +1,21 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<body>
+<h3>Hello World!</h3>
+{% if msgs %}
+{% for msg in msgs %}
+<tr>
+	<td><img alt="noimg" src="{{msg.sender.avatar_url}}" class="avatar avatar-60 photo" style="display:inline; border-radius:25px; height:25px; width:25px;"/></td>
+	<td>{{msg.sender.nick_name}}</td>
+	<td>{{msg.content}}</td>
+</tr>
+{% endfor %}
+{% endif %}
+
+-
+<h3>Goodbye World!</h3>
+
+</body>
+</html>
