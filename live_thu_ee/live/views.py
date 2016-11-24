@@ -1,6 +1,6 @@
  #coding:utf-8
 from django.shortcuts import render,  get_object_or_404
-from .models import Guest, Msg, Givenid
+from .models import Guest, Msg, Givenid, Comment
 from django.views.decorators.csrf import csrf_exempt
 import json
 from random import choice
@@ -9,16 +9,19 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 import datetime
 from email.header import Header
-from live.gl import danmucount
+from live.gl import danmucount, commentcount
+from django.views.decorators.csrf import csrf_exempt
+from django.forms.models import model_to_dict
 
 
 
 #以下是从微信端函数
 @csrf_exempt
 def login(request):#从微信端登录
+    print('loginhere')
     if request.method=='POST':
         req = json.loads(request.body.decode('utf-8'))
-        id=req['authid']
+        id=req['msg']
         try:
             givenid=Givenid.objects.get(authid=id)#检查authid是否已经分配过
         except Givenid.DoesNotExist:
@@ -33,9 +36,15 @@ def login(request):#从微信端登录
         return HttpResponse("没有用POST!")
 
 @csrf_exempt
+def datatry(request):#从微信端发消息，始终都有头像信息
+    return HttpResponse('hi')
+
+@csrf_exempt
 def datapost(request):#从微信端发消息，始终都有头像信息
+    print('dataposthere')
     if request.method == 'POST':
         req = json.loads(request.body.decode('utf-8'))
+        print(req)
         content = req['msg']
         name=req['name']
         img=req['img']
@@ -46,6 +55,7 @@ def datapost(request):#从微信端发消息，始终都有头像信息
         return HttpResponse("没有用POST!")
 
 #以下是网页端函数
+@csrf_exempt
 def danmusubmit(request):
     if request.method == 'POST':
         content=request.POST
@@ -57,7 +67,7 @@ def danmusubmit(request):
         msg.save()
     else:
         HttpResponseRedirect(reverse('live:index'))
-
+@csrf_exempt
 def commentsubmit(request):
     if request.method == 'POST':
         content=request.POST
@@ -74,21 +84,24 @@ def commentsubmit(request):
 
 def danmu(request):#JS请求
     global danmucount, commentcount
-    list=[]
+    dict={}
     danmus=Msg.objects.all()
     danmus.order_by("id")
     comments=Comment.objects.all()
     comments.order_by("id")
     if danmus.count()!=0 and danmucount != danmus.count():
         danmu=danmus[danmucount]
-        list.append(danmu.ToDict())
+        dict['danmu_name']=danmu.name
+        dict['danmu_img']=danmu.img
+        dict['danmu_content']=danmu.content
         danmucount+=1
-
-    if commentcount != 0 and commentcount!=comments.count():
+    if comments.count != 0 and commentcount!=comments.count():
         comment=comments[commentcount]
-        list.append(comment.ToDict())
+        dict['comment_name']=comment.name
+        dict['comment_img']=comment.img
+        dict['comment_content']=comment.content
         commentcount+=1
-    resp=json.dumps(list,ensure_ascii=False)
+    resp=json.dumps(dict,ensure_ascii=False)
 
     response=HttpResponse(resp)
     response['Access-Control-Allow-Origin']='*'
@@ -122,6 +135,6 @@ def index(request):
         except Guest.DoesNotExist:#若出错，则说明当前session尚未绑定，返回AnonymousUser
             guest=Guest.objects.get(authid='0000')
 
-
+    print(request.session['authid'])
     msgs = Msg.objects.all()
-    return render(request, 'live.html', {'msgs':msgs}, {'guest':guest})
+    return render(request, 'index.html', {'msgs':msgs}, {'guest':guest})

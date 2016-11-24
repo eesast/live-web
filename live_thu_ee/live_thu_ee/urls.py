@@ -23,7 +23,7 @@ app_name="live"
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^msg', views.datapost),
-    url(r'^index', views.index, name='index'),
+    url(r'^$', views.index, name='index'),
     url(r'^danmu', views.danmu, name='danmu'),#获取新的弹幕、评论，各一次一条，JS端用
     url(r'^login', views.login, name='login'),#登录url 杨怿飞用
     url(r'^datapost', views.datapost, name='datapost'),#微信端弹幕，杨怿飞用
