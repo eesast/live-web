@@ -18,11 +18,11 @@
 
 </head>
 
-<body>
+<body style="padding: 0;margin: 0">
 
     <!-- Just A temp Bullet-Screen demo -->
-    <div id="danmu-main" style="width: 100%;height: 520px;background: black">
-        <div id="danmu-screen" style="width: 100%; height: 100%;background: black"></div>
+    <div id="danmu-main" style="width: 100%;height: 520px;background-color: lightskyblue">
+        <div id="danmu-screen" style="width: 100%; height: 100%;background: lightskyblue"></div>
     </div>
 
 
@@ -34,11 +34,13 @@
         var txt;
 
         function interactive(){
-            var hrq = $.get("http://183.172.236.93:8000/danmu/",function(data){
-                txt = data.slice(1,data.length-1);
-            });
-            hrq.success(function(){
-                damoo.emit(txt);
+            var json_request = "http://183.172.234.84:8000/danmu/";
+            var hrq = $.getJSON(json_request);
+            hrq.success(function(data){
+                if( data.danmu_content!=undefined && data.danmu_content!=null && data.danmu_content!="" ) {
+                    txt = data.danmu_content;
+                    damoo.emit(txt);
+                }
             });
         }
 
