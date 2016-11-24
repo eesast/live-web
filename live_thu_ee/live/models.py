@@ -11,12 +11,12 @@ class Givenid(models.Model):
 
 @python_2_unicode_compatible
 class Guest(models.Model):
-    nick_name = models.CharField(max_length=50, default='Anonymous')
-    avatar_url = models.CharField(max_length=100, blank=True, null=True)
+    name = models.CharField(max_length=50, default='Anonymous')
+    img = models.CharField(max_length=100, blank=True, null=True)
     authid = models.CharField(max_length=4, default=0000)
 
     def __str__(self):
-        return self.nick_name
+        return self.name
 
 
 @python_2_unicode_compatible

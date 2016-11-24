@@ -1,17 +1,13 @@
  #coding:utf-8
 from django.shortcuts import render,  get_object_or_404
 from .models import Guest, Msg, Givenid, Comment
-from django.views.decorators.csrf import csrf_exempt
 import json
 from random import choice
 import string
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
-import datetime
-from email.header import Header
-from live.gl import danmucount, commentcount
 from django.views.decorators.csrf import csrf_exempt
-from django.forms.models import model_to_dict
+from .gl import danmucount, commentcount
 
 
 
@@ -22,16 +18,21 @@ def login(request):#从微信端登录
     if request.method=='POST':
         req = json.loads(request.body.decode('utf-8'))
         id=req['msg']
+        print(id)
         try:
             givenid=Givenid.objects.get(authid=id)#检查authid是否已经分配过
         except Givenid.DoesNotExist:
-            return HttpResponse("这个authid还没有分配！")
+            string="%s这个authid还没有分配！"%(id)
+            return HttpResponse(string)
         try:
             guest=Guest.objects.get(authid=id)#检查authid是否有微信绑定
-            return HttpResponse("这个authid分配过，但是已经有人绑定了！")
+            string="%s这个authid分配过，但是已经有人绑定了！"%(id)
+            return HttpResponse(string)
         except Guest.DoesNotExist:
-            guest=Guest(nick_name=req['name'], avatarurl=req['img'], authid=id)#建立新的Guest
+            guest=Guest(name=req['name'], img=req['img'], authid=id)#建立新的Guest
             guest.save()
+            string="%s与%s绑定成功！"%(req['name'],id)
+            return HttpResponse(string)
     else:
         return HttpResponse("没有用POST!")
 
@@ -50,7 +51,8 @@ def datapost(request):#从微信端发消息，始终都有头像信息
         img=req['img']
         msg=Msg(content=content, img=img, name=name)
         msg.save()
-        return HttpResponse("I got you.")
+        string='I got %s'%(content)
+        return HttpResponse(string)
     else:
         return HttpResponse("没有用POST!")
 
@@ -62,8 +64,8 @@ def danmusubmit(request):
         try:
             guest=Guest.objects.get(authid=request.session['authid'])
         except Guest.DoesNotExist:
-            guest=Guest.objects.get(authid=0000)
-        msg=Msg(content= content,name=guest.nick_name, img=guest.avatarurl)
+            guest=Guest.objects.get(authid='0000')
+        msg=Msg(content= content,name=guest.name, img=guest.img)
         msg.save()
     else:
         HttpResponseRedirect(reverse('live:index'))
@@ -74,8 +76,8 @@ def commentsubmit(request):
         try:
             guest=Guest.objects.get(authid=request.session['authid'])
         except Guest.DoesNotExist:
-            guest=Guest.objects.get(authid=0000)
-        comment=Comment(content=guest.nick_name,name=guest.nick_name, img=guest.avatarurl)
+            guest=Guest.objects.get(authid='0000')
+        comment=Comment(content=content,name=guest.name, img=guest.img)
         comment.save()
     else:
         HttpResponseRedirect(reverse('live:index'))
@@ -83,7 +85,7 @@ def commentsubmit(request):
 
 
 def danmu(request):#JS请求
-    global danmucount, commentcount
+    global danmucount,commentcount
     dict={}
     danmus=Msg.objects.all()
     danmus.order_by("id")
