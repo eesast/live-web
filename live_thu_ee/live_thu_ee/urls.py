@@ -25,8 +25,8 @@ urlpatterns = [
     url(r'^msg', views.datapost),
     url(r'^index', views.index, name='index'),
     url(r'^danmu', views.danmu, name='danmu'),#获取新的弹幕、评论，各一次一条，JS端用
-    url(r'^login', views.login, name='login'),#登录url 杨逸飞用
-    url(r'^datapost', views.datapost, name='datapost'),#微信端弹幕，杨逸飞用
+    url(r'^login', views.login, name='login'),#登录url 杨怿飞用
+    url(r'^datapost', views.datapost, name='datapost'),#微信端弹幕，杨怿飞用
     url(r'^danmusubmit', views.danmusubmit, name='danmusubmit'),#用户弹幕的表单交到这里
     url(r'^commentsubmit', views.commentsubmit, name='commentsubmit'),#用户评论的表单交到这里
 
