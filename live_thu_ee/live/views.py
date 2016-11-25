@@ -137,11 +137,11 @@ def index(request):
             guest=Guest.objects.get(authid=request.session['authid'])
         except Guest.DoesNotExist:#若出错，则说明当前session尚未绑定，返回AnonymousUser
             guest=Guest.objects.get(authid='0000')
-    if 'commentcount' not in request.seeesion:
+    if 'commentcount' not in request.session:
         request.session['commentcount']=0
     if 'danmucount' not in request.session:
         request.session['danmucount']=0
     request.session.save()
     print(request.session['authid'])
     msgs = Msg.objects.all()
-    return render(request, 'index.html', {'msgs':msgs}, {'guest':guest})
+    return render(request, 'live.html', {'msgs':msgs}, {'guest':guest})

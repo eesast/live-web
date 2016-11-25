@@ -29,7 +29,7 @@ else:
     DEBUG = True
 
 ALLOWED_HOSTS = [
-    '.eesast.com',
+    'live.thu.ee',
 ]
 
 
