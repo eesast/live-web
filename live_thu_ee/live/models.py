@@ -7,6 +7,8 @@ from django.utils.encoding import python_2_unicode_compatible
 @python_2_unicode_compatible
 class Givenid(models.Model):
     authid=models.CharField(max_length=4)
+    def __str__(self):
+        return self.authid
 
 
 @python_2_unicode_compatible
