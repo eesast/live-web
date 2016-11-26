@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 from django.contrib import admin
 from live import models
 from django.contrib.sessions.models import Session
