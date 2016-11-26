@@ -34,7 +34,7 @@
         var txt;
 
         function interactive(){
-            var json_request = "http://183.172.234.84:8000/danmu/";
+            var json_request = "http://192.168.1.100:8000/danmu";
             var hrq = $.getJSON(json_request);
             hrq.success(function(data){
                 if( data.danmu_content!=undefined && data.danmu_content!=null && data.danmu_content!="" ) {

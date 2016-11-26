@@ -9,7 +9,8 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from .gl import danmucount, commentcount
 
-
+def imgtest(reqeust):
+    return render(reqeust, 'imgtest.html')
 
 #以下是从微信端函数
 @csrf_exempt
@@ -36,9 +37,7 @@ def login(request):#从微信端登录
     else:
         return HttpResponse("没有用POST!")
 
-@csrf_exempt
-def datatry(request):#从微信端发消息，始终都有头像信息
-    return HttpResponse('hi')
+
 
 @csrf_exempt
 def datapost(request):#从微信端发消息，始终都有头像信息
@@ -55,6 +54,18 @@ def datapost(request):#从微信端发消息，始终都有头像信息
         return HttpResponse(string)
     else:
         return HttpResponse("没有用POST!")
+
+@csrf_exempt
+def wechatpost(request):#直接从趣现场获得弹幕
+    if request.method=='POST':
+        content=request.POST['content']
+        name=request.POST['user_name']
+        img=request.POST['user_info[contact_info][wx_headimg_url]']
+        msg=Msg(content=content, img=img, name=name)
+        msg.save()
+    return HttpResponse('0')
+
+
 
 #以下是网页端函数
 @csrf_exempt
@@ -97,15 +108,16 @@ def danmu(request):#JS请求
         dict['danmu_name']=danmu.name
         dict['danmu_img']=danmu.img
         dict['danmu_content']=danmu.content
-        danmucount+=1
+        print('1')
+        request.session['danmucount']+=1
     if comments.count != 0 and commentcount!=comments.count():
         comment=comments[commentcount]
         dict['comment_name']=comment.name
         dict['comment_img']=comment.img
         dict['comment_content']=comment.content
-        commentcount+=1
+        request.session['commentcount']+=1
+    request.session.save()
     resp=json.dumps(dict,ensure_ascii=False)
-
     response=HttpResponse(resp)
     response['Access-Control-Allow-Origin']='*'
     response["Access-Control-Allow-Headers"] = "*"
@@ -141,7 +153,11 @@ def index(request):
         request.session['commentcount']=0
     if 'danmucount' not in request.session:
         request.session['danmucount']=0
+    else:
+        print(request.session.session_key)
+        print('有danmucount')
+        print('是%s'%(request.session['danmucount']))
     request.session.save()
     print(request.session['authid'])
     msgs = Msg.objects.all()
-    return render(request, 'live.html', {'msgs':msgs}, {'guest':guest})
+    return render(request, 'index.html', {'msgs':msgs}, {'guest':guest})

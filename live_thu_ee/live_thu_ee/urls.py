@@ -22,6 +22,7 @@ from . import settings
 
 app_name="live"
 urlpatterns = [
+#    url(r'^imgtest/',views.imgtest),
     url(r'^admin/', admin.site.urls),
     url(r'^msg', views.datapost),
     url(r'^$', views.index, name='index'),
@@ -30,7 +31,7 @@ urlpatterns = [
     url(r'^datapost', views.datapost, name='datapost'),#微信端弹幕，杨怿飞用
     url(r'^danmusubmit', views.danmusubmit, name='danmusubmit'),#用户弹幕的表单交到这里
     url(r'^commentsubmit', views.commentsubmit, name='commentsubmit'),#用户评论的表单交到这里
-
+    url(r'^wechatpost', views.wechatpost, name='wechatpost'),#用更改的趣现场插件获取弹幕
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
