@@ -103,6 +103,10 @@ def danmu(request):#JS请求
     danmus.order_by("id")
     comments=Comment.objects.all()
     comments.order_by("id")
+    if danmucount>danmus.count():
+        request.session['danmucount']=danmus.count()
+    if commentcount>comments.count():
+        request.session['commentcount']=comments.count()
     if danmus.count()!=0 and danmucount != danmus.count():
         danmu=danmus[danmucount]
         dict['danmu_name']=danmu.name
