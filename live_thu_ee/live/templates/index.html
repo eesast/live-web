@@ -49,7 +49,7 @@
             hrq.success(function(data){
                 if( data.danmu_content!=undefined && data.danmu_content!=null && data.danmu_content!="" ) {
                     txt = data.danmu_content;
-                    txt.replace(/&nbsp;/," ");
+                    txt = txt.replace(/&nbsp;/," ");
                     damoo.emit(txt);
                 }
             });
