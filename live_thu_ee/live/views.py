@@ -171,6 +171,11 @@ def poll(request):
     dict['danmucount']=danmus.count()
     dict['commentcount']=comments.count()
     dict['totalamount']=Guests.objects.all.count()
+    try:
+        guest=Guest.objects.all.get(authid=request['authid'])
+    except Guest.DoesNotExist:
+        return HttpResponse('Server Error')
+    dict['forbid']=guset.forbid
     resp=json.dumps(dict,ensure_ascii=False)
     response=HttpResponse(resp)
     response['Access-Control-Allow-Origin']='*'
