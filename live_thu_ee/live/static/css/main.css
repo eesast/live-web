@@ -1,0 +1,473 @@
+*,*:before,*:after{
+    margin: 0;
+    padding: 0;
+}
+div{
+    display: block;
+}
+
+body.sty{
+    background: url("../image/stay.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+/*
+******************************************
+************Responsive Design*************
+******************************************
+*/
+html{
+    font-size: 16px;
+}
+@media all and (max-width: 1200px) {
+    html{
+        font-size: 14px;
+    }
+}
+@media all and (max-width: 800px) {
+    html{
+        font-size: 12px;
+    }
+}
+
+
+
+body{
+    position: relative;
+    overflow-x: hidden;
+    font-family: 'Microsoft Yahei',sans-serif;
+    color: hsla(0,0%,100%,.8);
+}
+
+/* banner area
+ ************************
+ */
+#banner{
+    display: block;
+    width: 100%;
+    color: white;
+    background-color: #2980b9;
+    height: 400px;
+    margin-bottom: 60px;
+}
+
+.text-after{
+    font-family: 'Microsoft Yahei',sans-serif;
+    font-size: 1.6rem;
+    font-weight: 200;
+    margin-left: 50%;
+}
+.text-before{
+    padding-top: 150px;
+    margin-left: 23%;
+    font-family: 'Microsoft Yahei', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+}
+.text-animate{
+    -webkit-animation: text 13s linear infinite alternate;
+    -o-animation: text 13s linear infinite alternate;
+    animation: text 13s linear infinite alternate;
+}
+.text-animate-inverse{
+    -webkit-animation: text-inverse 13s linear infinite alternate;
+    -o-animation: text-inverse 13s linear infinite alternate;
+    animation: text-inverse 13s linear infinite alternate;
+}
+
+/* Rotation animation */
+@keyframes matrix {
+    0%{border-color: hsla(0,0%,100%,0)}
+    5%{transform: translate(-5px,5px) rotate(-10deg);border-color: hsla(0,0%,100%,0)}
+    60%{border-color: hsla(0,0%,100%,.7)}
+    95%{border-color: hsla(0,0%,100%,0)}
+    100%{border-color: hsla(0,0%,100%,0); transform: translate(-100px, 100px) rotate(-360deg)}
+}
+
+.matrix{
+    border: 1px solid hsla(0,0%,100%,0);
+    width: 80px;
+    height: 75px;
+    position: absolute;
+    transform: rotate(30deg);
+    perspective: 400px;
+    -webkit-perspective: 400px;
+    perspective-origin: 30% 50%;
+    border-radius: 1px;
+    background: transparent;
+
+    -webkit-animation: matrix 9s linear 2s infinite alternate;
+    -o-animation: matrix 9s linear 2s infinite alternate;
+    animation: matrix 9s linear 2s infinite alternate;
+}
+
+.matrix-inv{
+    border: 1px solid hsla(0,0%,100%,0);
+    width: 80px;
+    height: 75px;
+    position: absolute;
+    transform: rotate(30deg);
+    perspective: 400px;
+    -webkit-perspective: 400px;
+    perspective-origin: 30% 50%;
+    border-radius: 1px;
+    background: transparent;
+
+    -webkit-animation: matrix-inv-anm 9s linear 1s infinite alternate;
+    -o-animation: matrix-inv-anm 9s linear 1s infinite alternate;
+    animation: matrix-inv-anm 9s linear 1s infinite alternate;
+}
+
+@keyframes matrix-inv-anm {
+    0%{border-color: hsla(0,0%,100%,0)}
+    5%{transform: translate(5px) rotate(-10deg);border-color: hsla(0,0%,100%,0)}
+    60%{border-color: hsla(0,0%,100%,.7)}
+    95%{border-color: hsla(0,0%,100%,0)}
+    100%{border-color: hsla(0,0%,100%,0); transform: translate(300px) rotate(-360deg)}
+}
+
+@keyframes run {
+    0%{border-color: hsla(0,0%,100%,0)}
+    5%{transform: translate(5px,5px) rotate(10deg);border-color: hsla(0,0%,100%,0)}
+    60%{border-color: hsla(0,0%,100%,.7)}
+    95%{border-color: hsla(0,0%,100%,0)}
+    100%{border-color: hsla(0,0%,100%,0); transform: translate(100px, 100px) rotate(360deg)}
+}
+.matrix-more{
+    border: 1px solid hsla(0,0%,100%,0);;
+    width: 80px;
+    height: 75px;
+
+    position: absolute;
+    border-radius: 1px;
+    background: transparent;
+    perspective: 300px;
+    -webkit-perspective: 300px;
+
+    -webkit-animation: run 9s linear 2s infinite alternate;
+    -o-animation: run 9s linear 2s infinite alternate;
+    animation: run 9s linear 2s infinite alternate;
+}
+
+@keyframes run-inverse {
+    0%{border-color: hsla(0,0%,100%,0)}
+    5%{transform: translate(-5px) rotate(10deg);border-color: hsla(0,0%,100%,0)}
+    60%{border-color: hsla(0,0%,100%,.7)}
+    95%{border-color: hsla(0,0%,100%,0)}
+    100%{border-color: hsla(0,0%,100%,0); transform: translate(-300px) rotate(360deg)}
+}
+.matrix-inverse{
+    border: 1px solid hsla(0,0%,100%,0);;
+    width: 80px;
+    height: 75px;
+
+    position: absolute;
+    border-radius: 1px;
+    background: transparent;
+    perspective: 300px;
+    -webkit-perspective: 300px;
+
+    -webkit-animation: run-inverse 9s ease-out 1s infinite alternate;
+    -o-animation: run-inverse 9s ease-out 1s infinite alternate;
+    animation: run-inverse 9s ease-out 1s infinite alternate;
+}
+
+
+@keyframes triangle-X{
+    0%{opacity: 0}
+    5%{transform: translate(-5px) rotateX(10deg);opacity: 0}
+    60%{opacity: .7}
+    95%{opacity: 0}
+    100%{opacity: 0; transform: translate(-200px) rotateX(360deg)}
+}
+
+@keyframes triangle-Xinverse {
+    0%{opacity: 0}
+    5%{transform: translate(5px) rotateX(10deg);opacity: 0}
+    60%{opacity: .7}
+    95%{opacity: 0}
+    100%{opacity: 0; transform: translate(200px) rotateX(360deg)}
+}
+
+@keyframes triangle-Y {
+    0%{opacity: 0}
+    5%{transform: translate(-5px) rotateY(10deg);opacity: 0}
+    60%{opacity: .7}
+    95%{opacity: 0}
+    100%{opacity: 0; transform: translate(-200px) rotateY(360deg)}
+}
+
+@keyframes triangle-Yinverse {
+    0%{opacity: 0}
+    5%{transform: translate(5px) rotateY(-10deg);opacity: 0}
+    60%{opacity: .7;}
+    95%{opacity: 0}
+    100%{opacity: 0; transform: translate(200px) rotateY(-360deg)}
+}
+
+@keyframes triangle-Z {
+    0%{opacity: 0}
+    5%{transform: translate(5px) rotate(10deg);opacity: 0}
+    60%{opacity: .6;}
+    95%{opacity: 0}
+    100%{opacity: 0; transform: translate(1000px) rotate(360deg)}
+}
+@keyframes triangle-Zinverse {
+    0%{opacity: 0}
+    5%{transform: translate(-5px) rotate(-10deg);opacity: 0}
+    60%{opacity: .6;}
+    95%{opacity: 0}
+    100%{opacity: 0; transform: translate(-1000px) rotate(-360deg)}
+}
+
+.triangleX{
+    position: absolute;
+
+    -webkit-animation: triangle-X 8s ease-out infinite alternate;
+    -o-animation: triangle-X 8s ease-out infinite alternate;
+    animation: triangle-X 8s ease-out infinite alternate;
+}
+.triangleY{
+    position: absolute;
+
+    -webkit-animation: triangle-Y 7s ease-out infinite alternate;
+    -o-animation: triangle-Y 7s ease-out infinite alternate;
+    animation: triangle-Y 7s ease-out infinite alternate;
+}
+.triangleYinverse{
+    position: absolute;
+
+    -webkit-animation: triangle-Yinverse 7s ease-out infinite alternate;
+    -o-animation: triangle-Yinverse 7s ease-out infinite alternate;
+    animation: triangle-Yinverse 7s ease-out infinite alternate;
+}
+.triangleXinverse{
+    position: absolute;
+
+    -webkit-animation: triangle-Xinverse 8s ease-out infinite alternate;
+    -o-animation: triangle-Xinverse 8s ease-out infinite alternate;
+    animation: triangle-Xinverse 8s ease-out infinite alternate;
+}
+.triangleZ{
+    position: absolute;
+
+    -webkit-animation: triangle-Z 9s linear infinite alternate;
+    -o-animation: triangle-Z 9s linear infinite alternate;
+    animation: triangle-Z 9s linear infinite alternate;
+}
+.triangleZ-inverse{
+    position: absolute;
+
+    -webkit-animation: triangle-Zinverse 9s linear infinite alternate;
+    -o-animation: triangle-Zinverse 9s linear infinite alternate;
+    animation: triangle-Zinverse 9s linear infinite alternate;
+}
+
+@keyframes text {
+    from{opacity: 1}
+    to{opacity: .8;transform: translate(10px)}
+}
+@keyframes text-inverse {
+    from{opacity: 1}
+    to{opacity: .8;transform: translate(-10px)}
+}
+
+/*
+************************************
+************banner end**************
+************************************
+*/
+
+
+
+#video_container{
+    margin: 0 0 50px 10%;
+    box-shadow: 10px 0 10px -10px black,
+                -10px 0 10px -10px black,
+                0 -2px 2px -2px black,
+                0 10px 10px -10px black;
+    display: inline-block;
+}
+p.header{
+    color: aliceblue;
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+    margin-left: 10%;
+}
+
+
+/*
+***********************************
+**********message box**************
+***********************************
+*/
+.message{
+    display: inline-block;
+    width: 26%;
+    background: transparent;
+    vertical-align: top;
+    height: auto;
+    clear: both;
+    margin: 0 10% 100px 3%;
+}
+.visited-box{
+    width: 100%;
+    height: auto;
+    color: hsla(0,0%,100%,.9);
+    background-color: #58a;
+    background-image: repeating-linear-gradient(30deg,transparent, transparent 15px, hsla(0,0%,100%,.1) 0,hsla(0,0%,100%,.1) 30px);
+    box-shadow: 3px 0 3px -3px black,
+                -5px 0 5px -5px black;
+}
+.visited-box > div.single-box{
+    display: inline-block;
+    width: 32%;
+    vertical-align: middle;
+    padding: .5rem 0 .9rem;
+}
+div.single-box .tip-box p{
+    text-align: center;
+    font-size: 1.2rem;
+    line-height: 1.333333;
+    margin: 1rem 0 .5rem;
+    font-weight: 400;
+}
+div.single-box > p{
+    text-align: center;
+    margin: 1rem 0;
+    font-size: 1.1rem;
+}
+
+#comment-box{
+    width: 100%;
+    margin: 20px 0 0 0;
+    background-color: hsla(0,0%,100%,.5);
+}
+#replacement{
+    display: inline-block;
+}
+
+#comment-area{
+    width: 97%;
+    height: 80%;
+    margin-bottom: 20px;
+    border-bottom: 1px solid hsla(0,0%,100%,.4);
+    outline: none;
+    font-size: 1.2rem;
+    color: rgba(0,0,0,.75);
+    font-family: 'Microsoft Yahei', sans-serif;
+    padding: 0;
+    padding-left: 3%;
+    line-height: 1.3;
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+    word-break: break-all;
+
+    /*
+    ********************
+    *****scroll bar*****
+    ********************
+    */
+
+    -ms-scrollbar-base-color: hsla(0,0%,100%,.5);
+    -ms-scrollbar-face-color: aliceblue;
+    -ms-scrollbar-highlight-color: #aaaaaa;
+    -ms-scrollbar-3dlight-color: aliceblue;
+    -ms-scrollbar-arrow-color: #009ae1;
+    -ms-scrollbar-track-color: aliceblue;
+}
+
+/*
+***************
+**scroll bar***
+***************
+*/
+#comment-area::-webkit-scrollbar{
+    width: 12px;
+}
+#comment-area::-webkit-scrollbar-track{
+    border-radius: 10px;
+    box-shadow: 0 0 2px #009ae1 inset;
+}
+#comment-area::-webkit-scrollbar-thumb{
+    border-radius: 10px;
+    box-shadow: 0 0 17px #009ae1 inset;
+}
+
+
+
+#comment-input{
+    width: 100%;
+    height: auto;
+}
+#comment-input textarea{
+    width: 74%;
+    padding: 3px 0 0 3px;
+    height: 4rem;
+    outline: none;
+    border: none;
+    margin-left: 20px;
+    border-top-width: 0;
+    font-size: 1.1rem;
+    font-family: 'Microsoft Yahei', sans-serif;
+    color: rgba(0,0,0,.7);
+    background-color: aliceblue;
+    white-space: normal;
+
+    border-radius: .3rem;
+
+    -webkit-transition: all ease-out .5s;
+    -moz-transition: all ease-out .5s;
+    -ms-transition: all ease-out .5s;
+    -o-transition: all ease-out .5s;
+    transition: all ease-out .5s;
+
+    -ms-scrollbar-base-color: hsla(0,0%,100%,.5);
+    -ms-scrollbar-face-color: aliceblue;
+    -ms-scrollbar-highlight-color: hsla(0,0%,100%,.5);
+    -ms-scrollbar-3dlight-color: aliceblue;
+    -ms-scrollbar-arrow-color: aliceblue;
+    -ms-scrollbar-track-color: aliceblue;
+
+
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+    word-break: break-all;
+}
+#comment-input textarea::-webkit-scrollbar{
+    width: 12px;
+    display: none;
+}
+
+
+#comment-input input[type='submit']{
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    vertical-align: top;
+    width: 18%;
+    height: 4rem;
+    outline: none;
+    border: none;
+    background: #009ae1;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-family: 'Microsoft Yahei', sans-serif;
+    color: inherit;
+
+    border-radius: .3em;
+
+    -webkit-transition: all ease .5s;
+    -moz-transition: all ease .5s;
+    -ms-transition: all ease .5s;
+    -o-transition: all ease .5s;
+    transition: all ease .5s;
+}
+#comment-input input[type='submit']:hover {
+    background-color: #5588aa;
+    color: white;
+}

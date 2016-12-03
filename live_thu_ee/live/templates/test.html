@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh_CN">
+
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=Edge,Chrome=1">
+    <meta name="viewport" content="initial-scale=1, width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="theme" content="EE">
+    <meta name="author" content="Aaron">
+    <meta name="renderer" content="webkit">
+    <meta name="description" content="Tsinghua EE Live">
+    <meta name="keywords" content="Tsinghua, EE, live">
+
+    <title> EE | Live </title>
+	{% load static %}
+    <link rel="stylesheet" href="{% static "css/lvv.css" %}">
+	{% load static %}
+    <script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
+	{% load static %}
+    <script type="text/javascript" src="{% static "js/animate.js" %}"></script>
+
+
+</head>
+
+<body>
+
+<div class="wrap">
+
+    <div id="wall-paper"></div>
+
+    <div class="video_part">
+        <div id="video_container"></div>
+
+        <div id="bullet-box">
+
+            <div class="totalNumber">
+                <p id="number">10000</p>
+            </div>
+
+            <div class="bullet-main-box"></div>
+
+            <div class="bullet-input-box">
+			<img src="{% if guest.img == '' %}static/image/anonymous.png{% else %} {{guest.img}}{% endif %}" style="width:50px;height:50px;">
+			{{guest.name}}
+			{% if guest.islogin == 0 %}
+				请关注无限之声，发送#{{ guest.authid }}即可登录
+			{% else %}
+				<a href="logout">退出登录</a>
+			{% endif %}
+                <label for="bullet-input"></label>
+                <textarea id="bullet-input"></textarea>
+                <input type="button" id="bullet-submit" class="bullet-submit" value="发送">
+            </div>
+
+
+        </div>
+    </div>
+<!--
+    <div class="comment-area">
+        <p id="comment-number">908 评论</p>
+
+        <div class="main-area" style="height: 210px;">
+            <img src="static/image/anonymous.png" id="user" class="image-area">
+            <div class="comment-input" data-commentOrder="0">
+                <label for="comment0"></label>
+                <textarea id="comment0" maxlength="120" placeholder="最多只能输入120字哦！"></textarea>
+                <input type="submit" class="comment-submit" value="吐槽！">
+            </div>
+        </div>
+
+        <div class="separate-line"></div>
+
+    </div>
+
+    <div class="comment-present">
+        <div class="main-area">
+            <img src="721459076041057284.jpg" class="image-area">
+            <div class="comment-input" data-commentOrder="1">
+
+            </div>
+        </div>
+
+        <div class="main-area">
+            <img src="721459076041057284.jpg" class="image-area">
+
+            <div class="comment-input" data-commentOrder="2">
+
+            </div>
+        </div>
+
+        <div class="main-area">
+            <img src="721459076041057284.jpg" class="image-area">
+
+            <div class="comment-input" data-commentOrder="3">
+
+            </div>
+        </div>
+
+        <div class="main-area">
+            <img src="721459076041057284.jpg" class="image-area">
+
+            <div class="comment-input" data-commentOrder="4">
+
+            </div>
+        </div>
+
+
+    </div>
+-->
+    <footer>
+
+    </footer>
+
+
+</div>
+
+
+
+<script src="//qzonestyle.gtimg.cn/open/qcloud/video/live/h5/live_connect.js" charset="utf-8"></script>
+<script type="text/javascript">
+
+    var winwidth = $(window).width()*0.6;
+    var winheight = $(window).height()*0.7;
+
+    var player = new qcVideo.Player("video_container", {
+        "live_url":"http://5130.liveplay.myqcloud.com/5130_10d3b863a76411e69776e435c87f075e.m3u8",
+        "live_url2" : "http://5130.liveplay.myqcloud.com/live/5130_10d3b863a76411e69776e435c87f075e.flv",
+        "width" : winwidth,
+        "height" : winheight
+    });
+
+    $(window).resize(function(){
+        $('#video_container').css({
+            "width":winwidth+"px",
+            "height":winheight+"px"
+        })
+    })
+
+</script>
+
+{% load static %}
+<script type="text/javascript" src="{% static "js/Ajax.js" %}"></script>
+
+
+
+</body>
+
+</html>
