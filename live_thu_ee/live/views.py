@@ -37,6 +37,12 @@ def login(request):#从微信端登录
     else:
         return HttpResponse("没有用POST!")
 
+def encodeHTML(str):
+    return str.replace("&", "&amp;") \
+    .replace("<", "&lt;") \
+    .replace(">", "&gt;") \
+    .replace("\"", "&quot;") \
+    .replace("'", "&#39;");
 
 
 @csrf_exempt
@@ -48,7 +54,7 @@ def datapost(request):#从微信端发消息，始终都有头像信息
         content = req['msg']
         name=req['name']
         img=req['img']
-        msg=Msg(content=content, img=img, name=name)
+        msg=Msg(content=encodeHTML(content), img=img, name=name)
         msg.save()
         string='I got %s'%(content)
         return HttpResponse(string)
@@ -65,12 +71,6 @@ def wechatpost(request):#直接从趣现场获得弹幕
         msg.save()
     return HttpResponse('0')
 
-def encodeHTML(str):
-    return str.replace("&", "&amp;") \
-    .replace("<", "&lt;") \
-    .replace(">", "&gt;") \
-    .replace("\"", "&quot;") \
-    .replace("'", "&#39;");
 
 #以下是网页端函数
 @csrf_exempt
@@ -80,6 +80,8 @@ def danmusubmit(request):
             guest=Guest.objects.get(authid=request.session['authid'])
         except Guest.DoesNotExist:
             return HttpResponse('server error')
+        if guest.forbid==1:
+            return HttpResponseRedirect('https://live.thu.ee')
         msg=Msg(content= encodeHTML(request.POST['msg']),name=guest.name, img=guest.img)
         msg.save()
         return HttpResponse('0')
@@ -93,6 +95,8 @@ def commentsubmit(request):
             guest=Guest.objects.get(authid=request.session['authid'])
         except Guest.DoesNotExist:
             return HttpResponse('server error')
+        if guest.forbid==1:
+            return HttpResponseRedirect('https://live.thu.ee')
         comment=Comment(content=encodeHTML(request.POST['msg']),name=guest.name, img=guest.img)
         comment.save()
     else:
@@ -103,7 +107,7 @@ def commentsubmit(request):
 def poll(request):
 #danmu & comment
     danmu_list=[]
-    com_list=[]
+    comment_list=[]
     dict={}
     danmus=Msg.objects.all().order_by("id")
     dnum=danmus.count()
@@ -143,7 +147,7 @@ def poll(request):
                 dict2['comment_time']=(danmu.send_time+timedelta(hours=8)).strftime("%Y-%m-%d %H:%M")
             comment_list.append(dict2)
     dict['danmu']=danmu_list
-    dict['comment']=com_list
+    dict['comment']=comment_list
     request.session['danmucount']=did
     request.session['commentcount']=cid
     request.session.save()
@@ -188,6 +192,7 @@ def logout(request):
         except Guest.DoesNotExist:
             return HttpResponse('not logged in yet.')
         del request.session['authid']
+        guest.delete()
         return HttpResponseRedirect('https://live.thu.ee')
     else:
         return HttpResponse('not logged in yet.')
