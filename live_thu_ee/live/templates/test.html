@@ -41,27 +41,34 @@
             <div class="bullet-main-box"></div>
 
             <div class="bullet-input-box">
-			<img src="{% if guest.img == '' %}static/image/anonymous.png{% else %} {{guest.img}}{% endif %}" style="width:50px;height:50px;">
+			<!--<img src="{% if guest.img == '' %}static/image/anonymous.png{% else %} {{guest.img}}{% endif %}" style="width:50px;height:50px;">
 			{{guest.name}}
 			{% if guest.islogin == 0 %}
 				请关注无限之声，发送#{{ guest.authid }}即可登录
 			{% else %}
 				<a href="logout">退出登录</a>
-			{% endif %}
+			{% endif %}-->
+
+
+                {% if guest.islogin == 0 %}
                 <label for="bullet-input"></label>
-                <textarea id="bullet-input"></textarea>
+                <textarea id="bullet-input" disabled="disabled">"{{guest.name}}请关注无限之声，发送#{{ guest.authid }}即可登录"</textarea>
+                {% else %}
+                <label for="bullet-input"></label>
+                <textarea id="bullet-input" placeholder="弹幕不可以太长哦！" maxlength="50"></textarea>
+                {% endif %}
                 <input type="button" id="bullet-submit" class="bullet-submit" value="发送">
             </div>
 
 
         </div>
     </div>
-<!--
+
     <div class="comment-area">
         <p id="comment-number">908 评论</p>
 
         <div class="main-area" style="height: 210px;">
-            <img src="static/image/anonymous.png" id="user" class="image-area">
+            <img src="{% if guest.img == '' %}static/image/anonymous.png{% else %} {{guest.img}}{% endif %}" id="user" class="image-area">
             <div class="comment-input" data-commentOrder="0">
                 <label for="comment0"></label>
                 <textarea id="comment0" maxlength="120" placeholder="最多只能输入120字哦！"></textarea>
@@ -107,7 +114,7 @@
 
 
     </div>
--->
+
     <footer>
 
     </footer>
@@ -118,26 +125,6 @@
 
 
 <script src="//qzonestyle.gtimg.cn/open/qcloud/video/live/h5/live_connect.js" charset="utf-8"></script>
-<script type="text/javascript">
-
-    var winwidth = $(window).width()*0.6;
-    var winheight = $(window).height()*0.7;
-
-    var player = new qcVideo.Player("video_container", {
-        "live_url":"http://5130.liveplay.myqcloud.com/5130_10d3b863a76411e69776e435c87f075e.m3u8",
-        "live_url2" : "http://5130.liveplay.myqcloud.com/live/5130_10d3b863a76411e69776e435c87f075e.flv",
-        "width" : winwidth,
-        "height" : winheight
-    });
-
-    $(window).resize(function(){
-        $('#video_container').css({
-            "width":winwidth+"px",
-            "height":winheight+"px"
-        })
-    })
-
-</script>
 
 {% load static %}
 <script type="text/javascript" src="{% static "js/Ajax.js" %}"></script>

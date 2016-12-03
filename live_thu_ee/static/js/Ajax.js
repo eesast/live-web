@@ -3,6 +3,23 @@
  */
 var islogin=-1; //0,1
 
+var winwidth = $(window).width()*0.6;
+var winheight = $(window).height()*0.7;
+
+var player = new qcVideo.Player("video_container", {
+	"live_url":"http://5130.liveplay.myqcloud.com/5130_10d3b863a76411e69776e435c87f075e.m3u8",
+	"live_url2" : "http://5130.liveplay.myqcloud.com/live/5130_10d3b863a76411e69776e435c87f075e.flv",
+	"width" : winwidth,
+	"height" : winheight
+});
+
+$(window).resize(function(){
+	$('#video_container').css({
+		"width":winwidth+"px",
+		"height":winheight+"px"
+	})
+});
+
 function getCookie(c_name)
 {
     if (document.cookie.length > 0)
@@ -30,8 +47,13 @@ function poll(){
 			{
 				for (i=0;i<json.danmu.length ; i++)
 				{
+
 					//danmu_name, danmu_content, danmu_time, danmu_img('' or https://mp.weixin...)
 					console.log("msg: " + json.danmu[i].danmu_content + " " + json.danmu[i].danmu_time);
+					var barrage = [
+						{"type":"content", "content":json.danmu[i].danmu_content, "time":"1"}
+					];
+					player.addBarrage(barrage);
 				}
 			}
 			if (json.comment.length>0)
@@ -73,3 +95,6 @@ $(document).ready(function(){
 		$("#bullet-input").val("");
 	});
 });
+
+
+
