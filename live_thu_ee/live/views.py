@@ -168,7 +168,9 @@ def poll(request):
         dict['islogin']=guest.islogin
     else:
         dict['islogin']=0
-
+    dict['danmucount']=danmus.count()
+    dict['commentcount']=comments.count()
+    dict['totalamount']=Guests.objects.all.count()
     resp=json.dumps(dict,ensure_ascii=False)
     response=HttpResponse(resp)
     response['Access-Control-Allow-Origin']='*'
@@ -192,7 +194,7 @@ def logout(request):
         except Guest.DoesNotExist:
             return HttpResponse('not logged in yet.')
         del request.session['authid']
-        guest.delete()
+        guest.islogin=0
         return HttpResponseRedirect('https://live.thu.ee')
     else:
         return HttpResponse('not logged in yet.')
@@ -207,7 +209,7 @@ def index(request):
                 request.session.save() 
                 guest=Guest(authid=id,ip=request.META['REMOTE_ADDR'])
                 addr=locating(request.META['REMOTE_ADDR'])
-                if len(addr["province".replace(" ","")])>0:
+                if len(addr["province"].replace(" ",""))>0:
                     guest.addr=addr["province"]
                 else:
                     guest.addr=addr["country"]
@@ -227,7 +229,7 @@ def index(request):
                     request.session.save()
                     guest=Guest(authid=id,ip=request.META['REMOTE_ADDR'])
                     addr=locating(request.META['REMOTE_ADDR'])
-                    if len(addr["province".replace(" ","")])>0:
+                    if len(addr["province"].replace(" ",""))>0:
                         guest.addr=addr["province"]
                     else:
                         guest.addr=addr["country"]
