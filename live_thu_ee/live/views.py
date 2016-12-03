@@ -170,12 +170,14 @@ def poll(request):
         dict['islogin']=0
     dict['danmucount']=danmus.count()
     dict['commentcount']=comments.count()
-    dict['totalamount']=Guests.objects.all.count()
+    g=Guest.objects.all()
+
+    dict['totalamount']=g.count()
     try:
-        guest=Guest.objects.all.get(authid=request['authid'])
+        guest=Guest.objects.get(authid=request.session['authid'])
     except Guest.DoesNotExist:
         return HttpResponse('Server Error')
-    dict['forbid']=guset.forbid
+    dict['forbid']=guest.forbid
     resp=json.dumps(dict,ensure_ascii=False)
     response=HttpResponse(resp)
     response['Access-Control-Allow-Origin']='*'
