@@ -7,8 +7,13 @@ var winwidth = $(window).width()*0.6;
 var winheight = $(window).height()*0.7;
 
 var player = new qcVideo.Player("video_container", {
-	"live_url":"http://5130.liveplay.myqcloud.com/5130_10d3b863a76411e69776e435c87f075e.m3u8",
-	"live_url2" : "http://5130.liveplay.myqcloud.com/live/5130_10d3b863a76411e69776e435c87f075e.flv",
+	"channel_id":"9896587163619643002",
+	"app_id":"1252829218",
+	"cache_time":2,
+	"https":1,
+	"wording":{'TipStreamNotFound':'直播还未开始，请耐心等待哦～'},
+	//"live_url":"http://5130.liveplay.myqcloud.com/5130_10d3b863a76411e69776e435c87f075e.m3u8",
+	//"live_url2" : "http://5130.liveplay.myqcloud.com/live/5130_10d3b863a76411e69776e435c87f075e.flv",
 	"width" : winwidth,
 	"height" : winheight
 });
